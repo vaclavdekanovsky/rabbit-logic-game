@@ -1,0 +1,247 @@
+{
+  "sprites": {
+    "bunny_idle": {
+      "url": "/assets/sprites/bunny_idle.webp",
+      "w": 361,
+      "h": 384,
+      "ax": 0.5262,
+      "ay": 0.97
+    },
+    "bunny_sleep": {
+      "url": "/assets/sprites/bunny_sleep.webp",
+      "w": 384,
+      "h": 354,
+      "ax": 0.5298,
+      "ay": 0.97
+    },
+    "bunny_dizzy": {
+      "url": "/assets/sprites/bunny_dizzy.webp",
+      "w": 311,
+      "h": 384,
+      "ax": 0.5364,
+      "ay": 0.97
+    },
+    "bunny_win": {
+      "url": "/assets/sprites/bunny_win.webp",
+      "w": 298,
+      "h": 384,
+      "ax": 0.4439,
+      "ay": 0.97
+    },
+    "bear_idle": {
+      "url": "/assets/sprites/bear_idle.webp",
+      "w": 345,
+      "h": 384,
+      "ax": 0.4939,
+      "ay": 0.97
+    },
+    "dragon_idle": {
+      "url": "/assets/sprites/dragon_idle.webp",
+      "w": 317,
+      "h": 384,
+      "ax": 0.5702,
+      "ay": 0.97
+    },
+    "carrot": {
+      "url": "/assets/sprites/carrot.webp",
+      "w": 350,
+      "h": 384,
+      "ax": 0.5094,
+      "ay": 0.97
+    },
+    "fish": {
+      "url": "/assets/sprites/fish.webp",
+      "w": 384,
+      "h": 212,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "gem": {
+      "url": "/assets/sprites/gem.webp",
+      "w": 384,
+      "h": 381,
+      "ax": 0.515,
+      "ay": 0.97
+    },
+    "rock": {
+      "url": "/assets/sprites/rock.webp",
+      "w": 384,
+      "h": 358,
+      "ax": 0.5338,
+      "ay": 0.97
+    },
+    "campfire": {
+      "url": "/assets/sprites/campfire.webp",
+      "w": 384,
+      "h": 359,
+      "ax": 0.5025,
+      "ay": 0.97
+    },
+    "fox": {
+      "url": "/assets/sprites/fox.webp",
+      "w": 277,
+      "h": 384,
+      "ax": 0.458,
+      "ay": 0.97
+    },
+    "pond": {
+      "url": "/assets/sprites/pond.webp",
+      "w": 384,
+      "h": 367,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "footprint": {
+      "url": "/assets/sprites/footprint.webp",
+      "w": 192,
+      "h": 192,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "arrow_wooden": {
+      "url": "/assets/sprites/arrow_wooden.webp",
+      "w": 256,
+      "h": 142,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "arrow_stone": {
+      "url": "/assets/sprites/arrow_stone.webp",
+      "w": 256,
+      "h": 112,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "arrow_magic": {
+      "url": "/assets/sprites/arrow_magic.webp",
+      "w": 256,
+      "h": 78,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "bridge_wood": {
+      "url": "/assets/sprites/bridge_wood.webp",
+      "w": 320,
+      "h": 320,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "bridge_ice": {
+      "url": "/assets/sprites/bridge_ice.webp",
+      "w": 320,
+      "h": 320,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "bridge_stone": {
+      "url": "/assets/sprites/bridge_stone.webp",
+      "w": 320,
+      "h": 320,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "floaters_grass": {
+      "url": "/assets/sprites/floaters_grass.webp",
+      "w": 384,
+      "h": 128,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "floaters_ice": {
+      "url": "/assets/sprites/floaters_ice.webp",
+      "w": 384,
+      "h": 128,
+      "ax": 0.5,
+      "ay": 0.5
+    },
+    "floaters_volcanic": {
+      "url": "/assets/sprites/floaters_volcanic.webp",
+      "w": 384,
+      "h": 128,
+      "ax": 0.5,
+      "ay": 0.5
+    }
+  },
+  "grounds": {
+    "grass": {
+      "url": "/assets/ground/grass.webp",
+      "w": 1024,
+      "h": 1024
+    },
+    "ice": {
+      "url": "/assets/ground/ice.webp",
+      "w": 1024,
+      "h": 1024
+    },
+    "volcanic": {
+      "url": "/assets/ground/volcanic.webp",
+      "w": 1024,
+      "h": 1024
+    },
+    "river_grass": {
+      "url": "/assets/ground/river_grass.webp",
+      "w": 512,
+      "h": 512
+    },
+    "river_grass_shine": {
+      "url": "/assets/ground/river_grass_shine.webp",
+      "w": 512,
+      "h": 512
+    },
+    "river_ice": {
+      "url": "/assets/ground/river_ice.webp",
+      "w": 512,
+      "h": 512
+    },
+    "river_ice_shine": {
+      "url": "/assets/ground/river_ice_shine.webp",
+      "w": 512,
+      "h": 512
+    },
+    "river_volcanic": {
+      "url": "/assets/ground/river_volcanic.webp",
+      "w": 512,
+      "h": 512
+    },
+    "river_volcanic_shine": {
+      "url": "/assets/ground/river_volcanic_shine.webp",
+      "w": 512,
+      "h": 512
+    }
+  },
+  "sheets": {
+    "bear_move": {
+      "url": "/assets/sheets/bear_move.webp",
+      "frames": 8,
+      "fps": 10,
+      "sync": "step",
+      "frameW": 366,
+      "frameH": 256,
+      "ax": 0.4861,
+      "ay": 0.97,
+      "scale": 1.0
+    },
+    "bunny_move": {
+      "url": "/assets/sheets/bunny_move.webp",
+      "frames": 8,
+      "fps": 10,
+      "sync": "step",
+      "frameW": 217,
+      "frameH": 256,
+      "ax": 0.5021,
+      "ay": 0.97,
+      "scale": 1.101
+    },
+    "dragon_move": {
+      "url": "/assets/sheets/dragon_move.webp",
+      "frames": 4,
+      "fps": 9.0,
+      "sync": "time",
+      "frameW": 293,
+      "frameH": 256,
+      "ax": 0.5468,
+      "ay": 0.97,
+      "scale": 1.085
+    }
+  }
+}

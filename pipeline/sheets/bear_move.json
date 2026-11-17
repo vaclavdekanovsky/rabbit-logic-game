@@ -1,0 +1,11 @@
+{
+  "url": "/assets/sheets/bear_move.webp",
+  "frames": 8,
+  "fps": 10,
+  "sync": "step",
+  "frameW": 366,
+  "frameH": 256,
+  "ax": 0.4861,
+  "ay": 0.97,
+  "scale": 1.0
+}

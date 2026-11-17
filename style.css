@@ -1,0 +1,573 @@
+:root {
+  --primary: #4ade80;
+  --primary-dark: #22c55e;
+  --secondary: #f97316;
+  --secondary-dark: #ea580c;
+  --bg-color: #f0fdf4;
+  --text: #1e293b;
+  --panel-bg: #ffffff;
+  --title-shadow: #fde047;
+  --gap: clamp(8px, 1.4vmin, 16px);
+  /* one arrow button; everything in the control pad is sized from it */
+  --key: clamp(68px, 13vmin, 116px);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* no double-tap zoom when a child taps fast */
+}
+
+/* ---------------------------------------------------------------- page frame
+   The page is exactly one screen: a slim bar for grown-ups on top, and the stage
+   (map + path + control pad) taking everything else. */
+#app {
+  height: 100dvh;
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.topbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.05rem, 2.3vmin + 0.5rem, 1.9rem);
+  line-height: 1.15;
+  color: var(--secondary-dark);
+  text-shadow: 2px 2px 0 var(--title-shadow);
+}
+
+.topbar-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.control-group {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 4px;
+  border-radius: 14px;
+}
+
+button {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.1s, box-shadow 0.1s;
+  user-select: none;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: none !important;
+}
+
+button:focus-visible {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+.diff-btn, .theme-btn, .tool-btn {
+  min-height: 40px;
+  padding: 6px 12px;
+  font-size: 1rem;
+  background-color: #e2e8f0;
+  color: #475569;
+  box-shadow: 0 3px 0 #cbd5e1;
+  white-space: nowrap;
+}
+
+.diff-btn.active {
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 3px 0 var(--primary-dark);
+}
+
+.theme-btn.active {
+  background-color: var(--secondary);
+  color: white;
+  box-shadow: 0 3px 0 var(--secondary-dark);
+}
+
+.tool-btn.on {
+  background-color: #10b981;
+  color: white;
+  box-shadow: 0 3px 0 #059669;
+}
+
+/* ---------------------------------------------------------------- stage */
+.stage {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  gap: var(--gap);
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "board pad"
+    "path  pad";
+}
+
+/* The map grows to the largest size that fits, keeping the aspect ratio the
+   renderer asks for (--board-aspect = visible columns / rows). */
+.board-wrap {
+  grid-area: board;
+  container-type: size;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.board {
+  width: min(100cqw, calc(100cqh * var(--board-aspect, 1)));
+  aspect-ratio: var(--board-aspect, 1);
+  border-radius: clamp(10px, 2vmin, 22px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  background: #1e293b;
+}
+
+.board {
+  position: relative;
+}
+
+.board canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* dragging pans the map instead of scrolling the page */
+}
+
+.board canvas.pannable { cursor: grab; }
+.board canvas.pannable.grabbing { cursor: grabbing; }
+
+.map-tools {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 6px;
+}
+.map-tools.hidden { display: none; }
+
+.map-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.3rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+}
+.map-btn[aria-pressed="true"] {
+  background-color: #10b981;
+  box-shadow: 0 3px 0 #059669;
+}
+.map-btn:disabled { opacity: 0.4; }
+
+/* ---------------------------------------------------------------- planned path */
+.path-bar {
+  grid-area: path;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  background: var(--panel-bg);
+  padding: 8px;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.sequence {
+  --item: clamp(52px, 9vmin, 76px);
+  flex: 1;
+  min-width: 0;
+  min-height: calc(var(--item) + 16px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  border: 2px dashed #cbd5e1;
+}
+
+.sequence:empty::before {
+  content: attr(data-hint);
+  padding-left: 8px;
+  color: #64748b;
+  font-size: clamp(0.95rem, 2.2vmin, 1.25rem);
+}
+
+.seq-item {
+  flex: 0 0 auto;
+  width: var(--item);
+  height: var(--item);
+  padding: 5px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #cbd5e1;
+  animation: popIn 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.seq-item:hover {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.round-btn {
+  flex: 0 0 auto;
+  width: clamp(48px, 8vmin, 64px);
+  height: clamp(48px, 8vmin, 64px);
+  font-size: clamp(1.3rem, 3.4vmin, 1.8rem);
+  border-radius: 50%;
+  background: #f1f5f9;
+  box-shadow: 0 4px 0 #cbd5e1;
+}
+
+/* ---------------------------------------------------------------- control pad */
+.pad {
+  grid-area: pad;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--gap) * 2);
+  background: var(--panel-bg);
+  padding: clamp(10px, 2vmin, 22px);
+  border-radius: 22px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* up on top, left / down / right below - like the arrow keys */
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, var(--key));
+  grid-template-rows: repeat(2, var(--key));
+  gap: clamp(8px, 1.6vmin, 14px);
+  grid-template-areas:
+    ".    up   ."
+    "left down right";
+}
+
+.arrow-btn[data-dir="up"] { grid-area: up; }
+.arrow-btn[data-dir="left"] { grid-area: left; }
+.arrow-btn[data-dir="down"] { grid-area: down; }
+.arrow-btn[data-dir="right"] { grid-area: right; }
+
+.arrow-btn {
+  padding: 14%;
+  background-color: #f8fafc;
+  border: 4px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 7px 0 #cbd5e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.arrow-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.dir-right { transform: rotate(0deg); }
+.dir-down { transform: rotate(90deg); }
+.dir-left { transform: rotate(180deg); }
+.dir-up { transform: rotate(-90deg); }
+
+.pad-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 1.2);
+}
+
+.go-btn {
+  width: 100%;
+  min-height: var(--key);
+  padding: 8px 24px;
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.8rem, 6vmin, 3rem);
+  letter-spacing: 1px;
+  background-color: var(--secondary);
+  color: white;
+  border-radius: 22px;
+  box-shadow: 0 9px 0 var(--secondary-dark);
+}
+
+.undo-btn {
+  width: 100%;
+  min-height: calc(var(--key) * 0.62);
+  font-size: clamp(1.1rem, 3vmin, 1.5rem);
+  background: #e2e8f0;
+  color: #475569;
+  box-shadow: 0 5px 0 #cbd5e1;
+  border-radius: 16px;
+}
+
+/* ---------------------------------------------------------------- tall screens
+   Tablet or phone held upright: map on top, path, then the pad as one row. */
+@media (max-aspect-ratio: 1/1) {
+  :root { --key: clamp(60px, 15vw, 104px); }
+
+  .stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-areas: "board" "path" "pad";
+  }
+
+  .pad {
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: var(--gap);
+  }
+
+  .pad-actions {
+    width: auto;
+    flex: 0 1 220px;
+    flex-direction: column-reverse;
+  }
+}
+
+/* Small screens: the top bar keeps only icons */
+@media (max-width: 900px) {
+  .theme-btn span, .tool-btn span, .diff-btn span { display: none; }
+  .diff-btn, .theme-btn, .tool-btn { padding: 6px 10px; }
+}
+
+/* Short landscape screens (phones on their side): tighter bar, smaller keys */
+@media (max-height: 520px) and (min-aspect-ratio: 1/1) {
+  :root { --key: clamp(52px, 17vh, 80px); }
+  h1 { display: none; }
+  .topbar { justify-content: center; }
+  .pad { gap: var(--gap); }
+  .sequence { --item: 40px; }
+  .path-bar { padding: 5px; }
+}
+
+/* ---------------------------------------------------------------- modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: white;
+  width: min(92vw, 520px);
+  padding: clamp(20px, 5vmin, 44px);
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.modal.hidden .modal-content {
+  transform: translateY(50px);
+}
+
+#modal-img {
+  display: none;
+  width: clamp(110px, 28vmin, 200px);
+  height: clamp(110px, 28vmin, 200px);
+  object-fit: contain;
+  margin: 0 auto 10px;
+}
+
+.modal h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 8vmin, 3.2rem);
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.modal p {
+  font-size: clamp(1.1rem, 3.4vmin, 1.5rem);
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Print Layout */
+#print-area {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+
+  body {
+    background: white;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    overflow: visible;
+  }
+  #app {
+    display: none !important;
+  }
+  #print-area {
+    position: static;
+    opacity: 1;
+    width: 100%;
+  }
+  
+  .print-page {
+    width: 100%;
+    height: 270mm; /* A4 height with margins */
+    margin: 0;
+    page-break-after: always;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .print-page:last-child {
+    page-break-after: auto;
+  }
+  
+  .print-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    color: black;
+    text-align: center;
+    margin-top: 10mm;
+    margin-bottom: 10mm;
+    text-shadow: none;
+  }
+
+  .print-grid {
+    width: 160mm;
+    height: 150mm;
+    margin: 0 auto 15mm auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .print-board {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-recommended-path {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .print-path-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .print-path-container img {
+    width: 15mm;
+    height: 15mm;
+  }
+  
+  .print-arrows-container {
+    display: grid;
+    grid-template-columns: repeat(4, 45mm);
+    grid-template-rows: repeat(6, 45mm);
+    grid-gap: 0;
+    justify-content: center;
+    align-content: start;
+    width: 180mm;
+    margin: 0 auto;
+  }
+  
+  .print-cutout {
+    width: 45mm;
+    height: 45mm;
+    border: 1px dashed #999;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .print-cutout img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}

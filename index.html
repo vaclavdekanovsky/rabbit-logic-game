@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rabbit Logic Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Slim bar for grown-ups: world, map size, tools -->
+      <header class="topbar">
+        <h1 id="game-title">Help the Rabbit find the Carrot! 🐇🥕</h1>
+        <div class="topbar-controls">
+          <div class="control-group" aria-label="World">
+            <button class="theme-btn active" data-theme="grass" title="Grass">🌿<span> Grass</span></button>
+            <button class="theme-btn" data-theme="ice" title="Ice">❄️<span> Ice</span></button>
+            <button class="theme-btn" data-theme="volcanic" title="Volcanic">🌋<span> Volcanic</span></button>
+          </div>
+          <div class="control-group" aria-label="Map size">
+            <button class="diff-btn active" data-size="easy">Easy</button>
+            <button class="diff-btn" data-size="medium">Medium</button>
+            <button class="diff-btn" data-size="hard">Hard</button>
+            <button class="diff-btn" data-size="big" title="A large map that scrolls with the hero">🗺️<span> Big</span></button>
+          </div>
+          <div class="control-group" aria-label="Game">
+            <button id="btn-new" class="tool-btn" title="New map">🔄<span> New</span></button>
+            <button id="btn-trail" class="tool-btn" title="Show where the path leads" aria-pressed="false">🐾<span> Trail</span></button>
+            <button id="btn-print" class="tool-btn" title="Print the map and arrow cut-outs">🖨️<span> Print</span></button>
+          </div>
+        </div>
+      </header>
+
+      <main class="stage">
+        <!-- The map: takes all the space that is left -->
+        <div class="board-wrap">
+          <div id="board" class="board">
+            <canvas id="board-canvas"></canvas>
+            <!-- Only shown on maps bigger than the screen -->
+            <div id="map-tools" class="map-tools hidden">
+              <button id="btn-overview" class="map-btn" title="See the whole map" aria-label="See the whole map" aria-pressed="false">🔍</button>
+              <button id="btn-recenter" class="map-btn" title="Back to the rabbit" aria-label="Back to the rabbit">🎯</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- The planned path, under the map -->
+        <section class="path-bar" aria-label="Your path">
+          <div id="sequence" class="sequence" data-hint="Tap the arrows to plan the way"></div>
+          <button id="btn-clear" class="round-btn" title="Start over" aria-label="Clear the path">🗑️</button>
+        </section>
+
+        <!-- Big controls for small hands -->
+        <aside class="pad" aria-label="Controls">
+          <div class="dpad">
+            <button class="arrow-btn" data-dir="up"><img src="/assets/sprites/arrow_wooden.webp" class="arrow-img dir-up" alt="Up" /></button>
+            <button class="arrow-btn" data-dir="left"><img src="/assets/sprites/arrow_wooden.webp" class="arrow-img dir-left" alt="Left" /></button>
+            <button class="arrow-btn" data-dir="down"><img src="/assets/sprites/arrow_wooden.webp" class="arrow-img dir-down" alt="Down" /></button>
+            <button class="arrow-btn" data-dir="right"><img src="/assets/sprites/arrow_wooden.webp" class="arrow-img dir-right" alt="Right" /></button>
+          </div>
+          <div class="pad-actions">
+            <button id="btn-undo" class="undo-btn" aria-label="Take back the last arrow">↩️ Undo</button>
+            <button id="btn-go" class="go-btn">GO!</button>
+          </div>
+        </aside>
+      </main>
+
+      <div id="modal" class="modal hidden">
+        <div class="modal-content">
+          <img id="modal-img" src="" alt="" />
+          <h2 id="modal-title">You Won!</h2>
+          <p id="modal-msg">The rabbit found the carrot!</p>
+          <button id="btn-modal-close" class="go-btn">Play Again</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Print Only Area -->
+    <div id="print-area">
+      <div class="print-page grid-page">
+        <h1 class="print-title">Help the Rabbit find the Carrot!</h1>
+        <div id="print-grid" class="print-grid"></div>
+        <div class="print-recommended-path">
+          <h2>Arrows Needed</h2>
+          <div id="print-path" class="print-path-container"></div>
+        </div>
+      </div>
+      <div class="print-page arrows-page">
+        <div id="print-arrows" class="print-arrows-container"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

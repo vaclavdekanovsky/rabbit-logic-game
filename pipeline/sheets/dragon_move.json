@@ -1,0 +1,11 @@
+{
+  "url": "/assets/sheets/dragon_move.webp",
+  "frames": 4,
+  "fps": 9.0,
+  "sync": "time",
+  "frameW": 293,
+  "frameH": 256,
+  "ax": 0.5468,
+  "ay": 0.97,
+  "scale": 1.085
+}

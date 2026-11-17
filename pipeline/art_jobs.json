@@ -1,0 +1,45 @@
+{
+  "_doc": "Image-generation jobs for Gemini via the `agy` CLI. `npm run generate -- <job> [<job> ...]` sends one prompt per job and expects gen_staging/<job>.png back. `then` is the follow-up command that turns the raw image into game art.",
+  "style": "Textured digital concept art style, painted adventure game illustration. Visible, layered, and deliberate brushstrokes, hard edges, sharp clear composition, digital illustration.",
+  "rules": {
+    "sprite": "A single centered subject, fully visible, isolated on a SOLID PURE WHITE background, no ground shadow, no text, square image.",
+    "sheet": "One square image containing a sprite sheet: a strict grid of {cols} columns and {rows} rows of equal cells on a SOLID PURE WHITE background, no grid lines, no text, no numbers. Every cell shows the SAME character at the SAME size, strict side view facing RIGHT, fully inside its cell with white space around it, no ground shadow. Read left to right, top to bottom, the cells are consecutive frames of one smooth looping animation.",
+    "ground": "Top-down orthographic view straight from above, flat even lighting, no horizon, no perspective, no large unique landmark. A uniform SEAMLESS TILEABLE texture that fills the whole square image edge to edge."
+  },
+  "jobs": {
+    "bunny_move": {
+      "kind": "sheet", "cols": 4, "rows": 2, "ref": "art/source/happy_rabbit.png",
+      "prompt": "The cute brown rabbit with the green backpack from the reference image, in a hopping run cycle: crouch, push off, stretched in the air, landing, recover.",
+      "then": "npm run sheet -- bunny_move --grid gen_staging/bunny_move.png --cutout --sync step"
+    },
+    "bear_move": {
+      "kind": "sheet", "cols": 4, "rows": 2, "ref": "art/source/polar_bear_happy.png",
+      "prompt": "The cute white polar bear cub from the reference image, in a heavy four-legged walk cycle on all fours, one full stride.",
+      "then": "npm run sheet -- bear_move --grid gen_staging/bear_move.png --cutout --count 8 --sync step"
+    },
+    "dragon_move": {
+      "kind": "sheet", "cols": 4, "rows": 2, "ref": "art/source/dragon_happy.png",
+      "prompt": "The cute little red dragon with golden horns from the reference image, flying: body level, legs tucked, one full wing beat from wings fully up to wings fully down and back.",
+      "then": "npm run sheet -- dragon_move --grid gen_staging/dragon_move.png --cutout --pick 0,1,2,1 --fps 9"
+    },
+    "bear_sleep":   { "kind": "sprite", "ref": "art/source/polar_bear_happy.png", "prompt": "The same cute polar bear cub curled up asleep, eyes closed." },
+    "bear_dizzy":   { "kind": "sprite", "ref": "art/source/polar_bear_happy.png", "prompt": "The same polar bear cub sitting, dizzy, swirly eyes, little stars circling its head." },
+    "bear_win":     { "kind": "sprite", "ref": "art/source/polar_bear_happy.png", "prompt": "The same polar bear cub happily holding a silver fish in its paws." },
+    "dragon_sleep": { "kind": "sprite", "ref": "art/source/dragon_happy.png", "prompt": "The same cute little red dragon curled up asleep, wings folded, eyes closed." },
+    "dragon_dizzy": { "kind": "sprite", "ref": "art/source/dragon_happy.png", "prompt": "The same little red dragon dizzy, swirly eyes, little stars circling its head." },
+    "dragon_win":   { "kind": "sprite", "ref": "art/source/dragon_happy.png", "prompt": "The same little red dragon happily hugging a glowing red ruby gem." },
+
+    "volcanic_gem":    { "kind": "sprite", "ref": "art/source/volcanic_gem_nobg.png", "prompt": "The same glowing red ruby crystal cluster as the reference, same painted style, but much brighter and more luminous: light pinkish-red and rose highlights with glowing white-hot facet edges, a bold bright cream-white rim light and a thin dark outline around the whole silhouette so it stands out from an orange lava background. Clean crisp silhouette edges with no halo, no glow haze and no scattered particles outside the crystal." },
+
+    "ice_block":       { "kind": "sprite", "prompt": "A chunky jagged block of blue ice, seen from a 3/4 top-down game view." },
+    "snowman":         { "kind": "sprite", "prompt": "A small friendly snowman with a carrot nose, seen from a 3/4 top-down game view." },
+    "obsidian_spikes": { "kind": "sprite", "prompt": "A cluster of sharp black obsidian spikes with a faint orange glow in the cracks, 3/4 top-down game view." },
+    "lava_vent":       { "kind": "sprite", "prompt": "A small volcanic vent puffing grey smoke with glowing lava inside, 3/4 top-down game view." },
+    "lava_river":      { "kind": "sprite", "prompt": "Top-down view of a short straight river of glowing lava with rounded ends and dark rock banks, exactly three times as wide as it is tall, crossed in the exact middle by a narrow black stone bridge running top to bottom." },
+    "arctic_fox":      { "kind": "sprite", "prompt": "A sly white arctic fox sitting, side view facing right." },
+
+    "ground_grass_b":    { "kind": "ground", "prompt": "Lush green meadow grass with a few tiny flowers and clover, same palette as a bright storybook meadow." },
+    "ground_ice_b":      { "kind": "ground", "prompt": "Pale blue frozen lake ice with fine cracks and patches of blown snow." },
+    "ground_volcanic_b": { "kind": "ground", "prompt": "Dark basalt cobbles with thin glowing orange lava veins between them." }
+  }
+}

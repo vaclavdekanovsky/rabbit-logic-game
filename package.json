@@ -1,0 +1,19 @@
+{
+  "name": "rabbit-logic-game",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "assets": "uv run --with pillow --with numpy --with scipy python pipeline/build_assets.py",
+    "sheet": "uv run --with pillow --with numpy --with scipy python pipeline/make_sheet.py",
+    "generate": "uv run --with pillow python pipeline/generate.py",
+    "river:materials": "uv run --with pillow --with numpy python pipeline/river/build_materials.py",
+    "river:bridges": "python pipeline/river/build_bridges.py"
+  },
+  "devDependencies": {
+    "vite": "^8.0.10"
+  }
+}

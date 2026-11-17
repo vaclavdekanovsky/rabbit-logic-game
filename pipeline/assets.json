@@ -1,0 +1,39 @@
+{
+  "_doc": "Single source of truth for runtime art. `npm run assets` turns these sources into public/assets/** and src/generated/assets.json. anchor: feet = standing sprite (drawn from its feet), center = flat ground sprite. px = longest side of the output. crop = fractional [x0,y0,x1,y1] applied before trimming. cutout = true runs white-background removal first (for raw AI images). trim = false keeps the source framing (art rendered to an exact size in cells).",
+  "sprites": {
+    "bunny_idle": { "src": "art/source/happy_rabbit_nobg.png", "anchor": "feet" },
+    "bunny_sleep": { "src": "art/source/sleeping_rabbit_nobg.png", "anchor": "feet" },
+    "bunny_dizzy": { "src": "art/source/rabbit_dizzy_nobg.png", "anchor": "feet" },
+    "bunny_win": { "src": "art/source/rabbit_eating_carrot_nobg.png", "anchor": "feet" },
+    "bear_idle": { "src": "art/source/polar_bear_happy_nobg.png", "anchor": "feet" },
+    "dragon_idle": { "src": "art/source/dragon_happy_nobg.png", "anchor": "feet" },
+    "carrot": { "src": "art/source/carrot_nobg.png", "anchor": "feet" },
+    "fish": { "src": "art/source/fish_goal_nobg.png", "anchor": "center" },
+    "gem": { "src": "art/source/volcanic_gem_nobg.png", "anchor": "feet" },
+    "rock": { "src": "art/source/rock_nobg.png", "anchor": "feet" },
+    "campfire": { "src": "art/source/fireplace_nobg.png", "anchor": "feet" },
+    "fox": { "src": "art/source/fox_nobg.png", "anchor": "feet" },
+    "pond": { "src": "art/source/pond_nobg.png", "anchor": "center" },
+    "footprint": { "src": "art/source/glowing_footprint_nobg.png", "anchor": "center", "px": 192 },
+    "arrow_wooden": { "src": "art/source/arrow_wooden_nobg.png", "anchor": "center", "px": 256 },
+    "arrow_stone": { "src": "art/source/arrow_stone_nobg.png", "anchor": "center", "px": 256 },
+    "arrow_magic": { "src": "art/source/arrow_magical_nobg.png", "anchor": "center", "px": 256 },
+    "bridge_wood": { "src": "art/source/bridge_wood_painted.png", "anchor": "center", "trim": false, "px": 320 },
+    "bridge_ice": { "src": "art/source/bridge_ice_painted.png", "anchor": "center", "trim": false, "px": 320 },
+    "bridge_stone": { "src": "art/source/bridge_stone_painted.png", "anchor": "center", "trim": false, "px": 320 },
+    "floaters_grass": { "src": "art/source/river_floaters_grass.png", "anchor": "center", "trim": false, "px": 384 },
+    "floaters_ice": { "src": "art/source/river_floaters_ice.png", "anchor": "center", "trim": false, "px": 384 },
+    "floaters_volcanic": { "src": "art/source/river_floaters_volcanic.png", "anchor": "center", "trim": false, "px": 384 }
+  },
+  "grounds": {
+    "grass": { "src": "art/source/tile_grass.png", "px": 1024 },
+    "ice": { "src": "art/source/tile_ice.png", "px": 1024 },
+    "volcanic": { "src": "art/source/tile_lava.png", "px": 1024 },
+    "river_grass": { "src": "art/source/river_grass.png", "px": 512 },
+    "river_grass_shine": { "src": "art/source/river_grass_shine.png", "px": 512 },
+    "river_ice": { "src": "art/source/river_ice.png", "px": 512 },
+    "river_ice_shine": { "src": "art/source/river_ice_shine.png", "px": 512 },
+    "river_volcanic": { "src": "art/source/river_volcanic.png", "px": 512 },
+    "river_volcanic_shine": { "src": "art/source/river_volcanic_shine.png", "px": 512 }
+  }
+}

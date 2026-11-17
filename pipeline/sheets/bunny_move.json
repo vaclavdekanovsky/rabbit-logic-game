@@ -1,0 +1,11 @@
+{
+  "url": "/assets/sheets/bunny_move.webp",
+  "frames": 8,
+  "fps": 10,
+  "sync": "step",
+  "frameW": 217,
+  "frameH": 256,
+  "ax": 0.5021,
+  "ay": 0.97,
+  "scale": 1.101
+}
